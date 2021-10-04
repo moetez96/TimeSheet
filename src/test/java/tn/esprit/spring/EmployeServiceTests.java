@@ -5,14 +5,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import tn.esprit.spring.entities.Contrat;
-import tn.esprit.spring.entities.Departement;
-import tn.esprit.spring.entities.Employe;
-import tn.esprit.spring.entities.Role;
-import tn.esprit.spring.repository.ContratRepository;
-import tn.esprit.spring.repository.DepartementRepository;
-import tn.esprit.spring.repository.EmployeRepository;
-import tn.esprit.spring.repository.TimesheetRepository;
+import tn.esprit.spring.entities.*;
+import tn.esprit.spring.repository.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,6 +33,12 @@ public class EmployeServiceTests {
 
     @Autowired
     TimesheetRepository timesheetRepository;
+
+    @Autowired
+    EntrepriseRepository entrepriseRepoistory;
+
+    @Autowired
+    MissionRepository missionRepository;
 
     @Test
     public void ajouterEmploye() {
@@ -117,4 +117,67 @@ public class EmployeServiceTests {
         employeService.deleteContratById(contratId);
         assertFalse(contratRepoistory.findById(contratId).isPresent());
     } */
+
+    @Test
+    public void getNombreEmployeJPQL() {
+        List<Employe> employeList = employeService.getAllEmployes();
+        int nb = employeService.getNombreEmployeJPQL();
+        assertEquals(employeList.size(), nb);
+    }
+
+    @Test
+    public void getAllEmployeNamesJPQL() {
+        List<String> list = employeService.getAllEmployeNamesJPQL();
+        List<String> list1 = employeService.getAllEmployes().stream().map(Employe::getNom).collect(Collectors.toList());
+        assertEquals(list, list1);
+    }
+
+    @Test
+    public void getAllEmployeByEntreprise() {
+        Entreprise entreprise = entrepriseRepoistory.findById(9).get();
+        assertNotNull(employeService.getAllEmployeByEntreprise(entreprise));
+    }
+
+    @Test
+    public void mettreAjourEmailByEmployeIdJPQL() {
+        String email = "test2@test.com";
+        int employeId = 8;
+        employeService.mettreAjourEmailByEmployeIdJPQL(email, employeId);
+        assertEquals(employeRepository.findById(employeId).get().getEmail(), email);
+    }
+
+    /* @Test
+    public void deleteAllContratJPQL() {
+        employeService.deleteAllContratJPQL();
+        assertTrue(contratRepoistory.count() < 0);
+    }
+    */
+
+    @Test
+    public void getSalaireByEmployeIdJPQL() {
+        int employeId = 8;
+        double salaire = employeService.getSalaireByEmployeIdJPQL(employeId);
+        assertTrue(employeRepository.findById(employeId).get().getContrat().getSalaire() == salaire);
+    }
+
+    @Test
+    public void getSalaireMoyenByDepartementId() {
+        int departementId = 24;
+        double salaryMoy = employeService.getSalaireMoyenByDepartementId(departementId);
+        assertNotNull(salaryMoy);
+    }
+
+    /* @Test
+    public void getTimesheetsByMissionAndDate() {
+        Employe employe = employeRepository.findById(8).get();
+        Mission mission = missionRepository.findById(6).get();
+        Date dateDebut = new Date();
+        Date dateFin = new Date();
+        assertNotNull(employeService.getTimesheetsByMissionAndDate(employe, mission, dateDebut, dateFin));
+    } */
+
+    @Test
+    public void getAllEmployes() {
+        assertFalse(employeService.getAllEmployes().isEmpty());
+    }
 }
