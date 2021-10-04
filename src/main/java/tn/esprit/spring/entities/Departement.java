@@ -8,6 +8,8 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 
 @Entity
@@ -25,7 +27,8 @@ public class Departement implements Serializable {
 	@JsonIgnore
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Employe> employes;
-	
+
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="departement")
 	private List<Mission> missions;
 	
