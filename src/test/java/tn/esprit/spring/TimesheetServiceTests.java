@@ -1,5 +1,6 @@
 package tn.esprit.spring;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import tn.esprit.spring.repository.EmployeRepository;
 import tn.esprit.spring.repository.MissionRepository;
 import tn.esprit.spring.repository.TimesheetRepository;
 
+import javax.validation.constraints.AssertTrue;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -40,7 +42,8 @@ public class TimesheetServiceTests {
     @Test
     public void ajouterMission() {
         Mission mission = new Mission("test mission", "test description");
-        assertNotNull(timesheetService.ajouterMission(mission));
+        int id = timesheetService.ajouterMission(mission);
+        assertTrue(missionRepository.findById(id).isPresent());
     }
 
     @Test
@@ -74,6 +77,9 @@ public class TimesheetServiceTests {
         Date dateFin = new Date();
         int validateurId = 10;
         timesheetService.validerTimesheet(missionId, employeId, dateDebut, dateFin, validateurId);
+        TimesheetPK timesheetPK = new TimesheetPK(missionId, employeId, dateDebut, dateFin);
+        System.out.println(timesheetRepository.findBytimesheetPK(timesheetPK).isValide());
+        assertTrue(timesheetRepository.findBytimesheetPK(timesheetPK).isValide());
     }
 
     @Test

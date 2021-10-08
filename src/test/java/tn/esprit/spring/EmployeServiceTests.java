@@ -43,7 +43,8 @@ public class EmployeServiceTests {
     @Test
     public void ajouterEmploye() {
         Employe employe = new Employe("testnom", "testprenom", "test@test.com", true, Role.CHEF_DEPARTEMENT);
-        assertNotNull(employeService.ajouterEmploye(employe));
+        int id = employeService.ajouterEmploye(employe);
+        assertTrue(employeRepository.findById(id).isPresent());
     }
 
     @Test
@@ -83,7 +84,8 @@ public class EmployeServiceTests {
     @Test
     public void ajouterContrat() {
         Contrat contrat = new Contrat(new Date(), "CDI", 3500);
-        assertNotNull(employeService.ajouterContrat(contrat));
+        int id = employeService.ajouterContrat(contrat);
+        assertTrue(contratRepoistory.findById(id).isPresent());
     }
 
     @Test
@@ -134,7 +136,8 @@ public class EmployeServiceTests {
 
     @Test
     public void getAllEmployeByEntreprise() {
-        Entreprise entreprise = entrepriseRepoistory.findById(9).get();
+        assertTrue(entrepriseRepoistory.findById(10).isPresent());
+        Entreprise entreprise = entrepriseRepoistory.findById(10).get();
         assertNotNull(employeService.getAllEmployeByEntreprise(entreprise));
     }
 
@@ -157,14 +160,16 @@ public class EmployeServiceTests {
     public void getSalaireByEmployeIdJPQL() {
         int employeId = 8;
         double salaire = employeService.getSalaireByEmployeIdJPQL(employeId);
-        assertTrue(employeRepository.findById(employeId).get().getContrat().getSalaire() == salaire);
+        assertTrue(employeRepository.findById(employeId).isPresent() &&
+                employeRepository.findById(employeId).get().getContrat().getSalaire() == salaire);
     }
 
     @Test
     public void getSalaireMoyenByDepartementId() {
         int departementId = 24;
-        double salaryMoy = employeService.getSalaireMoyenByDepartementId(departementId);
-        assertNotNull(salaryMoy);
+        double salaryMoy = 0.0;
+        salaryMoy = employeService.getSalaireMoyenByDepartementId(departementId);
+        assertNotEquals(salaryMoy, 0.0);
     }
 
     /* @Test
