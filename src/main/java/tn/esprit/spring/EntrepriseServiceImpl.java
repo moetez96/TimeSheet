@@ -36,37 +36,49 @@ public class EntrepriseServiceImpl implements IEntrepriseService {
 				// ==> c'est l'objet departement(le master) qui va mettre a jour l'association
 				//Rappel : la classe qui contient mappedBy represente le bout Slave
 				//Rappel : Dans une relation oneToMany le mappedBy doit etre du cote one.
-				Entreprise entrepriseManagedEntity = entrepriseRepoistory.findById(entrepriseId).get();
+		if(entrepriseRepoistory.findById(entrepriseId).isPresent()) {
+			Entreprise entrepriseManagedEntity = entrepriseRepoistory.findById(entrepriseId).get();
+			if(deptRepoistory.findById(depId).isPresent()) {
 				Departement depManagedEntity = deptRepoistory.findById(depId).get();
-				
+
 				depManagedEntity.setEntreprise(entrepriseManagedEntity);
 				deptRepoistory.save(depManagedEntity);
-		
+			}
+		}
 	}
 	
 	public List<String> getAllDepartementsNamesByEntreprise(int entrepriseId) {
-		Entreprise entrepriseManagedEntity = entrepriseRepoistory.findById(entrepriseId).get();
 		List<String> depNames = new ArrayList<>();
-		for(Departement dep : entrepriseManagedEntity.getDepartements()){
-			depNames.add(dep.getName());
+		if(entrepriseRepoistory.findById(entrepriseId).isPresent()) {
+			Entreprise entrepriseManagedEntity = entrepriseRepoistory.findById(entrepriseId).get();
+
+			for (Departement dep : entrepriseManagedEntity.getDepartements()) {
+				depNames.add(dep.getName());
+			}
 		}
-		
 		return depNames;
 	}
 
 	@Transactional
 	public void deleteEntrepriseById(int entrepriseId) {
-		entrepriseRepoistory.delete(entrepriseRepoistory.findById(entrepriseId).get());	
+		if(entrepriseRepoistory.findById(entrepriseId).isPresent()) {
+			entrepriseRepoistory.delete(entrepriseRepoistory.findById(entrepriseId).get());
+		}
 	}
 
 	@Transactional
 	public void deleteDepartementById(int depId) {
-		deptRepoistory.delete(deptRepoistory.findById(depId).get());	
+		if(deptRepoistory.findById(depId).isPresent()) {
+			deptRepoistory.delete(deptRepoistory.findById(depId).get());
+		}
 	}
 
 
 	public Entreprise getEntrepriseById(int entrepriseId) {
-		return entrepriseRepoistory.findById(entrepriseId).get();	
+		if(entrepriseRepoistory.findById(entrepriseId).isPresent()) {
+			return entrepriseRepoistory.findById(entrepriseId).get();
+		}else
+			{return null;}
 	}
 
 }
