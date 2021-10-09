@@ -1,12 +1,5 @@
 package tn.esprit.spring;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,14 +8,13 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import tn.esprit.spring.entities.Departement;
-import tn.esprit.spring.entities.Employe;
 import tn.esprit.spring.entities.Entreprise;
-import tn.esprit.spring.entities.Role;
 import tn.esprit.spring.repository.DepartementRepository;
 import tn.esprit.spring.repository.EntrepriseRepository;
+
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -40,13 +32,17 @@ public class EntrepriseServiceTests {
     @Test
     public void ajouterEntreprise() {
         Entreprise entreprise = new Entreprise("testentreprise", "testraison");
-        assertNotNull(entrepriseService.ajouterEntreprise(entreprise));
+        int id = 0;
+        id = entrepriseService.ajouterEntreprise(entreprise);
+        assertNotEquals(id, 0);
     }
 
     @Test
     public void ajouterDepartement() {
         Departement dep = new Departement("testnomdep");
-        assertNotNull(entrepriseService.ajouterDepartement(dep));
+        int id = 0;
+        id = entrepriseService.ajouterDepartement(dep);
+        assertNotEquals(id, 0);
     }
 
     @Test
