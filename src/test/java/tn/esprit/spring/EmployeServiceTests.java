@@ -184,4 +184,16 @@ public class EmployeServiceTests {
     public void getAllEmployes() {
         assertFalse(employeService.getAllEmployes().isEmpty());
     }
-}
+
+    @Test
+    public void test() {
+        Employe employe = new Employe("testnom", "testprenom", "test@test.com", true, Role.CHEF_DEPARTEMENT);
+
+        assertNotNull(employeRepository.save(employe));
+        assertTrue(employeRepository.findById(8).isPresent());
+        assertTrue(deptRepoistory.findById(24).isPresent());
+        assertTrue(contratRepoistory.findById(10).isPresent());
+        assertTrue(missionRepository.findById(10).isPresent());
+        assertTrue(missionRepository.findById(7).isPresent());
+        }
+    }

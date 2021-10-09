@@ -1,6 +1,6 @@
 package tn.esprit.spring.dto;
 
-public class ssiiConsultingDTO {
+public class EnterpriseDTO {
     private String name;
     private String raisonSocial;
 
