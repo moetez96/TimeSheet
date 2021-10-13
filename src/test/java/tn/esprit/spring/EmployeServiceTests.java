@@ -104,21 +104,18 @@ public class EmployeServiceTests {
         Employe employe = employeRepository.findById(employeId).get();
         assertEquals(employe.getPrenom(), prenom);
     }
-
     /* @Test
     public void deleteEmployeById() {
         int employeId = 32;
         employeService.deleteEmployeById(employeId);
         assertFalse(employeRepository.findById(employeId).isPresent());
     } */
-
     /* @Test
     public void deleteContratById() {
         int contratId = 10;
         employeService.deleteContratById(contratId);
         assertFalse(contratRepoistory.findById(contratId).isPresent());
     } */
-
     @Test
     public void getNombreEmployeJPQL() {
         List<Employe> employeList = employeService.getAllEmployes();
@@ -147,14 +144,12 @@ public class EmployeServiceTests {
         employeService.mettreAjourEmailByEmployeIdJPQL(email, employeId);
         assertEquals(employeRepository.findById(employeId).get().getEmail(), email);
     }
-
     /* @Test
     public void deleteAllContratJPQL() {
         employeService.deleteAllContratJPQL();
         assertTrue(contratRepoistory.count() < 0);
     }
     */
-
     @Test
     public void getSalaireByEmployeIdJPQL() {
         int employeId = 8;
@@ -170,7 +165,6 @@ public class EmployeServiceTests {
         salaryMoy = employeService.getSalaireMoyenByDepartementId(departementId);
         assertNotEquals(salaryMoy, 0.0);
     }
-
     /* @Test
     public void getTimesheetsByMissionAndDate() {
         Employe employe = employeRepository.findById(8).get();
@@ -179,7 +173,6 @@ public class EmployeServiceTests {
         Date dateFin = new Date();
         assertNotNull(employeService.getTimesheetsByMissionAndDate(employe, mission, dateDebut, dateFin));
     } */
-
     @Test
     public void getAllEmployes() {
         assertFalse(employeService.getAllEmployes().isEmpty());
