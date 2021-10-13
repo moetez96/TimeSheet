@@ -68,7 +68,7 @@ public class EntrepriseServiceTests {
     }
 
     /* @Test
-    public void deleteEntrepriseById() {
+    public void deleteEntrepriseById(){
         int entrepriseId = 14;
         entrepriseService.deleteEntrepriseById(entrepriseId);
 
