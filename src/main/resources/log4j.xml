@@ -10,7 +10,7 @@
         <param name="append" value="true" />
         <param name="maxFileSize" value="10MB" />
         <param name="maxBackupIndex" value="10" />
-        <param name="file" value="C:/logs/formation.log"/>
+        <param name="file" value="C:/logs/error.log"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} %l:%L - %m%n" />
         </layout>
