@@ -122,7 +122,7 @@ public class EmployeServiceTests {
         int nb = employeService.getNombreEmployeJPQL();
         assertEquals(employeList.size(), nb);
     }
-
+    //test
     @Test
     public void getAllEmployeNamesJPQL() {
         List<String> list = employeService.getAllEmployeNamesJPQL();
